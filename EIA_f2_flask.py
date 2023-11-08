@@ -26,6 +26,7 @@ residual_model_f2 = load('residual_forecast_f2.bin')
 def predict_f2(input_json):
     # Convert the input data into a DataFrame with the same structure as f0_train
     # The input data should contain the past 5 hours of demand data in the 'demand_MW' column
+    
     input_df = pd.DataFrame(input_json['data'])
     input_df['date_time'] = pd.to_datetime(input_df['date_time'])
     input_df['demand_MW'] = input_df['demand_MW'].astype(float)
@@ -47,7 +48,7 @@ def predict_f2(input_json):
     
     return pred_timestring, int(pred_demand_f2)
 
-app = Flask('forecast')
+app = Flask('forecast_f2')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -63,4 +64,4 @@ def predict():
     return jsonify(result)
 
 if __name__ == "__main__":
-app.run(debug=True, host='0.0.0.0', port=9696)
+    app.run(debug=True, host='0.0.0.0', port=9696)
